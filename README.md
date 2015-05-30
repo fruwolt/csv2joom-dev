@@ -60,9 +60,9 @@ Getestet habe ich mit folgenden Versionen:
 - datafileCat.csv (die csv-Datei mit Kategorie-Daten nach Upload) 
 - datafileImg.csv (die csv-Datei mit Bild-Daten nach Upload)
 
---> vor einem komplett neuen Import sollten all diese Dateien verschoben/gelöscht/umbenannt werden / der Basis-Pfad leer sein
---> vor einem Bild-Import muss die Datei csv2joom_catmapping.csv vorhanden sein
---> Bilder ohne ermittelbare Kategorie-ID werden per default der Kategorie mit ID 1 zugeordnet (entspricht der Wurzel-Kategorie der JoomGallery)
+- vor einem komplett neuen Import sollten all diese Dateien verschoben/gelöscht/umbenannt werden / der Basis-Pfad leer sein
+- vor einem Bild-Import muss die Datei csv2joom_catmapping.csv vorhanden sein
+- Bilder ohne ermittelbare Kategorie-ID werden per default der Kategorie mit ID 1 zugeordnet (entspricht der Wurzel-Kategorie der JoomGallery)
 
 
 ## Was ist zu tun:
