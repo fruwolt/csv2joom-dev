@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form enctype="multipart/form-data">
+  <fieldset name="migration_cat">
+    <field
+      id="datafile-cat-csv2joom"
+      name="datafile-cat-csv2joom"
+      type="file"
+      class="inputbox validate-joomfiles"
+      label="FILES_JOOMGALLERY_MIGRATION_CSV2JOOM_DATAFILE_CAT_LABEL"
+      description="FILES_JOOMGALLERY_MIGRATION_CSV2JOOM_DATAFILE_CAT_LABEL_DESC"
+      required="false"
+    />
+  </fieldset>
+  <fieldset name="migration_img">
+    <field
+      id="datafile-img-csv2joom"
+      name="datafile-img-csv2joom"
+      type="file"
+      class="inputbox validate-joomfiles"
+      label="FILES_JOOMGALLERY_MIGRATION_CSV2JOOM_DATAFILE_IMG_LABEL"
+      description="FILES_JOOMGALLERY_MIGRATION_CSV2JOOM_DATAFILE_IMG_LABEL_DESC"
+      required="false"
+    />
+  </fieldset>
+</form>

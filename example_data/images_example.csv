@@ -1,0 +1,10 @@
+image_id,category_id,rel_path_filename (relative to [JoomlaPath]/tmp/csv2joom/),title,image_description,date
+1,5,images/img1.jpg,test image1,description of test image1,
+2,6,images/img2.jpg,test image2,,
+3,7,images/img3.jpg,test image3,,
+4,10,images/img4.jpg,test image4,,2012-05-21 00:00:00
+5,10,images/img5.jpg,test image5,,2014-05-21 00:00:00
+6,11,images/img6.jpg,test image6,,2013-05-21 01:01:01
+7,12,images/img7.jpg,test image7,,
+8,8,images/img8.jpg,test image8,,2012-06-11 00:00:00
+9,12,images/img9.jpg,test image9,,

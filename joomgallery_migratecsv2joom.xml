@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="file" version="20150530" method="upgrade">
+  <name>Import Script from csv-data to JoomGallery 3 JUX</name>
+  <creationDate>2015/05/30</creationDate>
+  <author>fruwolt</author>
+  <copyright>This component is released under the GNU/GPL License</copyright>
+  <authorEmail>frank.ruwolt@web.de</authorEmail>
+  <authorUrl>http://www.example.com</authorUrl>
+  <version>20150530</version>
+  <description>This script imports category and image data from csv files into JoomGallery 3 JUX.</description>
+  <fileset>
+    <files target="administrator/components/com_joomgallery/helpers/migration">
+      <file>migratecsv2joom.php</file>
+      <file>migratecsv2joom.xml</file>
+    </files>
+    <files folder="example_data" target="tmp/csv2joom">
+      <file>categories_example.csv</file>
+      <file>images_example.csv</file>
+    </files>
+    <files folder="example_data/images" target="tmp/csv2joom/images">
+      <file>img1.jpg</file>
+      <file>img2.jpg</file>
+      <file>img3.jpg</file>
+      <file>img4.jpg</file>
+      <file>img5.jpg</file>
+      <file>img6.jpg</file>
+      <file>img7.jpg</file>
+      <file>img8.jpg</file>
+      <file>img9.jpg</file>
+	</files>
+  </fileset>
+  <languages folder="language" client="administrator">
+    <language tag="de-DE" client="administrator">de-DE/de-DE.com_joomgallery.migratecsv2joom.ini</language>
+    <language tag="en-GB" client="administrator">en-GB/en-GB.com_joomgallery.migratecsv2joom.ini</language>
+  </languages>
+  <updateservers>
+  </updateservers>
+</extension>
