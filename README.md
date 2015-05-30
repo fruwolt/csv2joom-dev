@@ -76,28 +76,28 @@ nach Installation der JoomGallery (falls noch nicht vorhanden) das csv2joom-Skri
 
 2. 
 für den Upload der csv-Dateien muss eine Datei der JoomGallery angepasst werden
-- die Datei dient der Darstellung von Formularen (im Mogrationsmanager der JoomGallery), unterstützt zur Zeit aber nicht den Upload von Dateien
-- hierzu also bitte die Datei [Joomla-Pfad]/administrator/components/com_joomgallery/layouts/joomgallery/migration/form.php bearbeiten und folgende Zeile
+-die Datei dient der Darstellung von Formularen (im Mogrationsmanager der JoomGallery), unterstützt zur Zeit aber nicht den Upload von Dateien
+-hierzu also bitte die Datei [Joomla-Pfad]/administrator/components/com_joomgallery/layouts/joomgallery/migration/form.php bearbeiten und folgende Zeile
 `<form action="<?php echo $displayData->url; ?>" method="post" class="form-horizontal form-validate">`
 ersetzen mit
 `<form action="<?php echo $displayData->url; ?>" method="post" class="form-horizontal form-validate" enctype="multipart/form-data">`
-- mit dem `enctype="multipart/form-data"` unterstützt das Formular dann den Datei-Upload
+-mit dem `enctype="multipart/form-data"` unterstützt das Formular dann den Datei-Upload
 (entweder unterstützen spätere JoomGallery-Versionen das ja vielleicht ohne Änderung oder alternativ werde ich das Skript anpassen, dass die Dateien auch  auf den Server kopiert werden können (z.B. per FTP) und man gibt dann im Formular nur noch den Pfad zur Datei an..)
 
 3. 
 Erstellen eigener csv-Dateien mit den eigenen Kategorien/Bilddaten oder Nutzen der Beispiel-Dateien
-- Formatierung der csv-Dateien siehe Beispiel-Dateien
+-Formatierung der csv-Dateien siehe Beispiel-Dateien
 
 4.
-- Import der Kategorie-Daten, dazu:
-- Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2joom - Import aus CSV-Dateien in JoomGallery"
-- csv-Datei für Kategorien hochladen mit Button "Schritt 1: CSV-Datei Kategorien" + Klick auf "Checken"-Button
-- wenn alles ok ist, erscheint: "Die Migration kann gestartet werden."; dann auf Button "Starten" klicken
-- Import-Vorgang läuft 
+-Import der Kategorie-Daten, dazu:
+-Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2joom - Import aus CSV-Dateien in JoomGallery"
+-csv-Datei für Kategorien hochladen mit Button "Schritt 1: CSV-Datei Kategorien" + Klick auf "Checken"-Button
+-wenn alles ok ist, erscheint: "Die Migration kann gestartet werden."; dann auf Button "Starten" klicken
+-Import-Vorgang läuft 
 
 5.
-- Import der Bilder, dazu:
-- Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2joom - Import aus CSV-Dateien in JoomGallery"
-- csv-Datei für Kategorien hochladen mit Button "Schritt 2: CSV-Datei Bilder" + Klick auf "Checken"-Button
-- wenn alles ok ist, erscheint: "Die Migration kann gestartet werden."; dann auf Button "Starten" klicken
-- Import-Vorgang läuft
+-Import der Bilder, dazu:
+-Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2joom - Import aus CSV-Dateien in JoomGallery"
+-csv-Datei für Kategorien hochladen mit Button "Schritt 2: CSV-Datei Bilder" + Klick auf "Checken"-Button
+-wenn alles ok ist, erscheint: "Die Migration kann gestartet werden."; dann auf Button "Starten" klicken
+-Import-Vorgang läuft
