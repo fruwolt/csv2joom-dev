@@ -78,9 +78,9 @@ nach Installation der JoomGallery (falls noch nicht vorhanden) das csv2joom-Skri
 für den Upload der csv-Dateien muss eine Datei der JoomGallery angepasst werden
 - die Datei dient der Darstellung von Formularen (im Mogrationsmanager der JoomGallery), unterstützt zur Zeit aber nicht den Upload von Dateien
 - hierzu also bitte die Datei [Joomla-Pfad]/administrator/components/com_joomgallery/layouts/joomgallery/migration/form.php bearbeiten und folgende Zeile
-<form action="<?php echo $displayData->url; ?>" method="post" class="form-horizontal form-validate">
+'<form action="<?php echo $displayData->url; ?>" method="post" class="form-horizontal form-validate">'
 ersetzen mit
-<form action="<?php echo $displayData->url; ?>" method="post" class="form-horizontal form-validate" enctype="multipart/form-data">
+'<form action="<?php echo $displayData->url; ?>" method="post" class="form-horizontal form-validate" enctype="multipart/form-data">'
 - mit dem 'enctype="multipart/form-data"' unterstützt das Formular dann den Datei-Upload
 (entweder unterstützen spätere JoomGallery-Versionen das ja vielleicht ohne Änderung oder alternativ werde ich das Skript anpassen, dass die Dateien auch  auf den Server kopiert werden können (z.B. per FTP) und man gibt dann im Formular nur noch den Pfad zur Datei an..)
 
