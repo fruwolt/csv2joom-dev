@@ -52,13 +52,13 @@ Getestet habe ich mit folgenden Versionen:
 
 - der Basis-Pfad für csv2joom lautet [Joomla-Pfad]/tmp/csv2joom/
 - hier werden beim Import folgende Dateien angelegt:
--- csv2joom.log (Log-Datei)
--- csv2joom_already_stored_cats.txt (Hilfs-Datei für Import der Kategorien; enthält Liste mit IDs der bereits importierten Kategorien)
--- csv2joom_already_stored_imgs.txt (Hilfs-Datei für Import der Bilder; enthält Liste mit IDs der bereits importierten Bilder)
--- csv2joom_catmapping.csv (Zuordnung alter/originaler Kategorie-IDs auf neu vergebene Kategorie-IDs 
--- dieses Zuordnung ist wichtig für den Bild-Import, damit diese den richtigen Kategorien zugeordnet werden können
--- datafileCat.csv (die csv-Datei mit Kategorie-Daten nach Upload) 
--- datafileImg.csv (die csv-Datei mit Bild-Daten nach Upload)
+- csv2joom.log (Log-Datei)
+- csv2joom_already_stored_cats.txt (Hilfs-Datei für Import der Kategorien; enthält Liste mit IDs der bereits importierten Kategorien)
+- csv2joom_already_stored_imgs.txt (Hilfs-Datei für Import der Bilder; enthält Liste mit IDs der bereits importierten Bilder)
+- csv2joom_catmapping.csv (Zuordnung alter/originaler Kategorie-IDs auf neu vergebene Kategorie-IDs 
+- dieses Zuordnung ist wichtig für den Bild-Import, damit diese den richtigen Kategorien zugeordnet werden können
+- datafileCat.csv (die csv-Datei mit Kategorie-Daten nach Upload) 
+- datafileImg.csv (die csv-Datei mit Bild-Daten nach Upload)
 
 --> vor einem komplett neuen Import sollten all diese Dateien verschoben/gelöscht/umbenannt werden / der Basis-Pfad leer sein
 --> vor einem Bild-Import muss die Datei csv2joom_catmapping.csv vorhanden sein
