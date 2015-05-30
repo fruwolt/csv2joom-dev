@@ -37,14 +37,11 @@ Getestet habe ich mit folgenden Versionen:
 - die Bilder werden beim Import von dort in die JoomGallery-eigenen Ordner kopiert 
 
 ## Wissenswertes vorab:
-a) 
 - ich empfehle, den Import erst mal auf einem Testsystem auszuprobieren und/oder MINDESTENS ein VOLLSTÄNDIGES Backup ALLER Daten der Website vorzunehmen (Dateien und Datenbank)!
 
-b)
 - die Kategorien bekommen im Zuge des Imports neue Kategorie-IDs zugewiesen
 - um die Zuordnung der Bilder zu den dann geänderten Kategorie-IDs kümmert sich das Skript - siehe auch d)
 
-c)
 - Beispiel-Daten siehe Ordner [Joomla-Pfad]/tmp/csv2joom/
 - die Reihenfolge der Kategorien in der csv-Datei ist wichtig/relevant
 - vorerst müssen die Kategorien gemäß ihrer "Enthaltensein-Beziehung" beginnend mit der/den übergeordneten Kategorien (Wurzel-Kategorie) aufgelistet werden 
@@ -53,7 +50,6 @@ c)
 - die Kategorien der obersten Ebene (Wurzel) bekommen für die ID der übergeordneten ID eine 0
 - d.h. Kategorien mit parent-ID 0 werden als Haupt-Kategorie angelegt (unterhalb der JoomGallery-eigenen Wurzel/Basis-Kategorie)
 
-d)
 - der Basis-Pfad für csv2joom lautet [Joomla-Pfad]/tmp/csv2joom/
 - hier werden beim Import folgende Dateien angelegt:
 -- csv2joom.log (Log-Datei)
