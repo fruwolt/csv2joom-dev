@@ -40,7 +40,7 @@ Getestet habe ich mit folgenden Versionen:
 - ich empfehle, den Import erst mal auf einem Testsystem auszuprobieren und/oder MINDESTENS ein VOLLSTÄNDIGES Backup ALLER Daten der Website vorzunehmen (Dateien und Datenbank)!
 
 - die Kategorien bekommen im Zuge des Imports neue Kategorie-IDs zugewiesen
-- um die Zuordnung der Bilder zu den dann geänderten Kategorie-IDs kümmert sich das Skript - siehe auch d)
+- um die Zuordnung der Bilder zu den dann geänderten Kategorie-IDs kümmert sich das Skript (sieh auch weiter unten)
 
 - Beispiel-Daten siehe Ordner [Joomla-Pfad]/tmp/csv2joom/
 - die Reihenfolge der Kategorien in der csv-Datei ist wichtig/relevant
