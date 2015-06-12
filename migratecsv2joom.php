@@ -20,14 +20,14 @@ class JoomMigrateCsv2Joom extends JoomMigration
   protected $migration = 'csv2joom';
 
   //prepare file names (store uploaded files + intermedia data like category ids etc)
-  private $sDatafileCatName 		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'datafileCat.csv'; 
-  private $sDatafileImgName 		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'datafileImg.csv';
-  private $sAlreadyStoredCatsFile 	= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom_already_stored_cats.txt';
-  private $sAlreadyStoredImgsFile 	= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom_already_stored_imgs.txt';
-  private $sCatIdMappingFile 		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom_catmapping.csv';
-  private $sLogfileName 			= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom.log';
+  private $sDatafileCatName 		= null;
+  private $sDatafileImgName 		= null;
+  private $sAlreadyStoredCatsFile 	= null;
+  private $sAlreadyStoredImgsFile 	= null;
+  private $sCatIdMappingFile 		= null;
+  private $sLogfileName 			= null;
   // root path of images to be imported (use paths relative to this folder in images csv data file)
-  private $sPathWorkingDir			= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR;
+  private $sPathWorkingDir			= null;
   
   private $aAlreadyInsertedCatIds = array(); //list of already imported category ids
   private $aCatIdMapping = array(); //mapping of old/original cat ids to new ids egeranetd when categories are stored in db
@@ -40,6 +40,19 @@ class JoomMigrateCsv2Joom extends JoomMigration
   private $bImportImages = false; //flag indicating to execute importing images
   
   private $bCopyImages = true; //copy images from src folder to joomGallery destination folder
+  
+  function __construct() {
+	  parent::__construct();
+	  
+	  $this->sDatafileCatName 		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'datafileCat.csv'; 
+	  $this->sDatafileImgName 		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'datafileImg.csv';
+	  $this->sAlreadyStoredCatsFile = JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom_already_stored_cats.txt';
+	  $this->sAlreadyStoredImgsFile = JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom_already_stored_imgs.txt';
+	  $this->sCatIdMappingFile 		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom_catmapping.csv';
+	  $this->sLogfileName 			= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR . 'csv2joom.log';
+	  $this->sPathWorkingDir		= JPATH_SITE . DIRECTORY_SEPARATOR . 'tmp' . DIRECTORY_SEPARATOR . 'csv2joom' . DIRECTORY_SEPARATOR; 
+  }
+  
   
   /**
    * Starts all default migration checks.
