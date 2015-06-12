@@ -364,7 +364,7 @@ class JoomMigrateCsv2Joom extends JoomMigration
   		}
   		else {
   			$this->aAlreadyInsertedImgIds[$aDataset['id']] = $aDataset['id'];
-  			$this->writeLogfile('no image found for image with id ' . $aDataset['id'] . ' at ' . $this->sPathWorkingDir . $aDataset['imgfilenameFull'], true);
+  			$this->writeLogfile('no image file found for image with id ' . $aDataset['id'] . ' at ' . $this->sPathWorkingDir . $aDataset['imgfilenameFull'], true);
   		}
   		
   		if(!$this->checkTime()) {
@@ -416,7 +416,7 @@ class JoomMigrateCsv2Joom extends JoomMigration
   	  	}
   	  	
   	  	if ($bCatFileAvailable === false && $bImgFileAvailable === false) { // in case no file was given
-  	  		$this->writeLogfile('No data fiel specified/uploaded. Stopped.' . "\n" . 'form data: category file: ' . var_export($aFileInfoCat, true) . "\n" .  'img file: ' . var_export($aFileInfoImg, true), true);
+  	  		$this->writeLogfile('No data file specified/uploaded. Stopped.' . "\n" . 'form data: category file: ' . var_export($aFileInfoCat, true) . "\n" .  'img file: ' . var_export($aFileInfoImg, true), true);
   	  		return false;
   	  	}
   	  	
