@@ -430,7 +430,7 @@ class JoomMigrateCsv2Joom extends JoomMigration
   		}
   		
   		//additionally check column count of csv file
-  		if ($bResultCat) {
+  		if ($bCatFileAvailable && $bResultCat) {
   			$bResultCat = $this->checkCsvColumnCount($this->sDatafileCatName, $this->iCatCsvColumnCount);
   		}
   		
@@ -445,7 +445,7 @@ class JoomMigrateCsv2Joom extends JoomMigration
   		}
   		
   		//additionally check column count of csv file
-  		if ($bResultImg) { 
+  		if ($bImgFileAvailable && $bResultImg) { 
   			$bResultImg = $this->checkCsvColumnCount($this->sDatafileImgName, $this->iImgCsvColumnCount); 
   		}
   		
