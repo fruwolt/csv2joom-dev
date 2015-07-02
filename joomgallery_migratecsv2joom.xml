@@ -10,8 +10,10 @@
   <description>This script imports category and image data from csv files into JoomGallery 3 JUX.</description>
   <fileset>
     <files target="administrator/components/com_joomgallery/helpers/migration">
-      <file>migratecsv2joom.php</file>
-      <file>migratecsv2joom.xml</file>
+      <file>migratecsv2joomcat.php</file>
+      <file>migratecsv2joomcat.xml</file>
+      <file>migratecsv2joomimg.php</file>
+      <file>migratecsv2joomimg.xml</file>
     </files>
     <files folder="example_data" target="tmp/csv2joom">
       <file>categories_example.csv</file>
@@ -30,8 +32,10 @@
 	</files>
   </fileset>
   <languages folder="language" client="administrator">
-    <language tag="de-DE" client="administrator">de-DE/de-DE.com_joomgallery.migratecsv2joom.ini</language>
-    <language tag="en-GB" client="administrator">en-GB/en-GB.com_joomgallery.migratecsv2joom.ini</language>
+    <language tag="de-DE" client="administrator">de-DE/de-DE.com_joomgallery.migratecsv2joomcat.ini</language>
+    <language tag="de-DE" client="administrator">de-DE/de-DE.com_joomgallery.migratecsv2joomimg.ini</language>
+    <language tag="en-GB" client="administrator">en-GB/en-GB.com_joomgallery.migratecsv2joomcat.ini</language>
+    <language tag="en-GB" client="administrator">en-GB/en-GB.com_joomgallery.migratecsv2joomimg.ini</language>
   </languages>
   <updateservers>
   </updateservers>
