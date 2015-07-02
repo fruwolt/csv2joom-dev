@@ -137,13 +137,19 @@ class JoomMigrateCsv2Joom extends JoomMigration
     	if (!JFile::exists($this->sAlreadyStoredImgsFile)) {//contains ids of images already stored in db
     		fopen($this->sAlreadyStoredImgsFile, 'w'); //create file (on first run)
     	}
-    	$aDataTmp = explode(',', fgets(fopen($this->sAlreadyStoredImgsFile, 'r')));
-    	foreach ($aDataTmp as $sTmpValue) {
-    		$this->aAlreadyInsertedImgIds[$sTmpValue] = $sTmpValue;
+    	
+    	
+    	$aImgIdLines = file($this->sAlreadyStoredImgsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    	foreach ($aImgIdLines as $sLine) {
+    		$aDataTmp = explode(',', $sLine);
+    		if (isset($aDataTmp[0]) && isset($aDataTmp[1])) { //0: original image id (in csv file); 1: newly assigned image id
+    			$this->aAlreadyInsertedImgIds[$aDataTmp[0]] = $aDataTmp[1];
+    		}
     	}
     	$this->writeLogfile('alreadyInserted imgage ids array set to ' . var_export($this->aAlreadyInsertedImgIds, true), false);
     	
     	$aImgData = $this->readImageDataFromFile();
+    	
     	
     	$this->writeLogfile('Done reading images data file', true);
     	$this->writeLogfile(count($aImgData) . ' images left to be inserted into db', true);
@@ -212,7 +218,16 @@ class JoomMigrateCsv2Joom extends JoomMigration
   	 
   	if (JFile::exists($this->sDatafileImgName)) {
   		$aLines = file($this->sDatafileImgName);
-  			
+  		
+  		//determine next available image id (by adding 1 to current max image id)
+  		$iNextImageId = -1;
+  		$query = $this->_db->getQuery(true)
+  			->select('MAX(id)')
+  			->from($this->_db->qn(_JOOM_TABLE_IMAGES));
+  		$this->_db->setQuery($query);
+  		$iMaxId = intval($this->_db->loadResult());
+  		$iNextImageId = intval($iMaxId + 1);
+  		
   		$iCount = 0;
   		foreach ($aLines as $sLine) {
   			if ($iCount == 0) {
@@ -230,7 +245,8 @@ class JoomMigrateCsv2Joom extends JoomMigration
   				}
 
   				$aDataTmp = array();
-  				$aDataTmp['id'] 				= $aLineParts[0];
+  				$aDataTmp['id'] 				= $iNextImageId++;
+  				//$aDataTmp['originalId'] 		= $aLineParts[0]; //just to have original id without offset in dataset array for later user
   				$aDataTmp['catid'] 				= (isset($this->aCatIdMapping[$aLineParts[1]]) ? $this->aCatIdMapping[$aLineParts[1]] : 1);
   				$aDataTmp['imgfilenameFull'] 	= $aLineParts[2]; //special value only for this import, not recognized/needed by joomgallery
   				$aDataTmp['imgfilename'] 		= basename($aLineParts[2]); //just the filename
@@ -239,7 +255,6 @@ class JoomMigrateCsv2Joom extends JoomMigration
   				$aDataTmp['imgdate'] 			= ($aLineParts[5] != '' ? $aLineParts[5] : date('Y-m-d H:i:s'));
   				$aDataTmp['published'] 			= 1; //maybe add to initial form wether imported categories are published by default or not
   				$aImgDataRTV[$aLineParts[0]] = $aDataTmp;
-  												
   			}
   			$iCount++;
   		}
@@ -354,38 +369,47 @@ class JoomMigrateCsv2Joom extends JoomMigration
    */
   function createImages($aImgData) {
   	
-  	foreach ($aImgData as $sImgId => $aDataset) {
-  		
+  	foreach ($aImgData as $sImgId => $aDataset) { //remember: $aDataset['id'] contains additional offset; $sImgId is the real/original image id from csv file
+
   		if (JFile::exists($this->sPathWorkingDir . $aDataset['imgfilenameFull'])) {
   			$this->moveAndResizeImage((object)$aDataset, $this->sPathWorkingDir . $aDataset['imgfilenameFull'], null, null, true, $this->bCopyImages);
-  			$this->aAlreadyInsertedImgIds[$aDataset['id']] = $aDataset['id'];
+  			$this->aAlreadyInsertedImgIds[$sImgId] = $aDataset['id'];
   			
-  			$this->writeLogfile('inserted image with id ' . $aDataset['id'] . 'data: ' . var_export($aDataset, true), true);
+  			$this->writeLogfile('inserted image with id ' . $aDataset['id'] . ' (orig id: ' . $sImgId . '; data: ' . var_export($aDataset, true), true);
   		}
   		else {
-  			$this->aAlreadyInsertedImgIds[$aDataset['id']] = $aDataset['id'];
-  			$this->writeLogfile('no image file found for image with id ' . $aDataset['id'] . ' at ' . $this->sPathWorkingDir . $aDataset['imgfilenameFull'], true);
+  			$this->aAlreadyInsertedImgIds[$sImgId] = $aDataset['id'];
+  			$this->writeLogfile('no image file found for image with id ' . $aDataset['id'] . ' (orig id: ' . $sImgId . ') at ' . $this->sPathWorkingDir . $aDataset['imgfilenameFull'], true);
   		}
   		
   		if(!$this->checkTime()) {
   			
-  			//store already inserted image ids in file to survive refreshing..
-  			file_put_contents($this->sAlreadyStoredImgsFile, implode(',', $this->aAlreadyInsertedImgIds), LOCK_EX);
+  			//store already inserted image ids (mapping of original image ids to newly assigned ids) in file to survive refreshing..
+  			
+  			//store category ids mapping in file to survive refreshing..
+  			$sImgIdMappingFileContent = '';
+  			foreach ($this->aAlreadyInsertedImgIds as $sImgIdOriginal => $sImgIdNew) {
+  				$sImgIdMappingFileContent .= $sImgIdOriginal . ',' . $sImgIdNew . "\n";
+  			}
+  			file_put_contents($this->sAlreadyStoredImgsFile, $sImgIdMappingFileContent, LOCK_EX);
   			$this->writeLogfile('already inserted images written to file: ' . implode(',', $this->aAlreadyInsertedImgIds), false);
   			
   			$this->refresh('images');
   		}
   	}
+  	
+  	//finally store last inserted image ids in file
+  	//store category ids mapping in file to survive refreshing..
+  	$sImgIdMappingFileContent = '';
+  	foreach ($this->aAlreadyInsertedImgIds as $sImgIdOriginal => $sImgIdNew) {
+  		$sImgIdMappingFileContent .= $sImgIdOriginal . ',' . $sImgIdNew . "\n";
+  	}
+  	file_put_contents($this->sAlreadyStoredImgsFile, $sImgIdMappingFileContent, LOCK_EX);
+  	$this->writeLogfile('already inserted images written to file: ' . implode(',', $this->aAlreadyInsertedImgIds), false);
   }
   
   
   private function checkDatafiles() {
-  	
-  	/*if (!JFolder::exists($this->sPathWorkingDir)) {
-  	 $aReady[] = mkdir($this->sPathWorkingDir, 077, true);
-  	 }
-  	 $aReady[] = !is_writable($this->sPathWorkingDir);
-  	 */
   	
   	try {
   	  	$aFileInfoCat = JRequest::getVar('datafile-cat-csv2joom', '', 'files');
@@ -489,7 +513,7 @@ class JoomMigrateCsv2Joom extends JoomMigration
   			$this->writeLogfile('Column count mismatch in csv file ' . $sPathFileName . '. Expected ' . $iExpectedColCount . ' but found ' . count($aLineParts), true);
   			return false;
   		}  				
-  	}
+  	} 
 	 	
   	return true;
   }
