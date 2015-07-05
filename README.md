@@ -4,9 +4,9 @@ Importieren/Erstellen von Kategorien und Bildern in die JoomGallery basierend au
 
 
 Die JoomGallery bietet eine Migrations-Manager (siehe http://www.joomgallery.net/dokumentation/das-backend-die-schaltzentrale/weitere-manager/der-migrations-manager.html )
-Hierzu lassen sich beriets diverse Migrations-Skripte herunterladen (siehe http://www.joomgallery.net/downloads/joomgallery-fuer-joomla-3/addons/migrationsskripte.html ), um Daten aus älteren JoomGallery-Versionen oder anderen Bildergalerien zu migrieren. 
+Hierzu lassen sich bereits diverse Migrations-Skripte herunterladen (siehe http://www.joomgallery.net/downloads/joomgallery-fuer-joomla-3/addons/migrationsskripte.html ), um Daten aus älteren JoomGallery-Versionen oder anderen Bildergalerien zu migrieren. 
 
-Dieses Skript soll nun dazu dienen, die JoomGallery mittels vom Nutzer bereitgestellter csv-Dateien mit Kategorien und Bildern zu füllen.
+Dieses Skript soll nun dazu dienen, die JoomGallery mittels vom Nutzer bereitgestellter CSV-Dateien mit Kategorien und Bildern zu füllen.
 (Ich hatte eine eigene Datenbank mit einer größeren Anzahl Bild- und Kategoriedaten (>5000 Bilder; >1000 Kategorien), konnte und wollte die also unmöglich per Hand in der JoomGallery erstellen. Deshalb ist das csv2joom-Migrationsskript entstanden...)
 
 
@@ -40,7 +40,10 @@ Getestet habe ich mit folgenden Versionen:
 - ich empfehle, den Import erst mal auf einem Testsystem auszuprobieren und/oder MINDESTENS ein VOLLSTÄNDIGES Backup ALLER Daten der Website vorzunehmen (Dateien und Datenbank)!
 
 - die Kategorien bekommen im Zuge des Imports neue Kategorie-IDs zugewiesen
-- um die Zuordnung der Bilder zu den dann geänderten Kategorie-IDs kümmert sich das Skript (sieh auch weiter unten)
+- um die Zuordnung der Bilder zu den dann geänderten Kategorie-IDs kümmert sich das Skript (siehe auch weiter unten)
+
+- auch die Bilder bekommen beim Import neue IDs zugewiesen
+- damit ist es möglich, dass zu bereits bestehenden Kategorien/Bildern per CSV-Import neue Bilder hinzugefügt werden können
 
 - Beispiel-Daten siehe Ordner [Joomla-Pfad]/tmp/csv2joom/
 - die Reihenfolge der Kategorien in der csv-Datei ist wichtig/relevant
@@ -54,7 +57,7 @@ Getestet habe ich mit folgenden Versionen:
 - hier werden beim Import folgende Dateien angelegt:
 - csv2joom.log (Log-Datei)
 - csv2joom_already_stored_cats.txt (Hilfs-Datei für Import der Kategorien; enthält Liste mit IDs der bereits importierten Kategorien)
-- csv2joom_already_stored_imgs.txt (Hilfs-Datei für Import der Bilder; enthält Liste mit IDs der bereits importierten Bilder)
+- csv2joom_already_stored_imgs.txt (Hilfs-Datei für Import der Bilder; enthält Liste mit IDs der bereits importierten Bilder incl. der jeweils neu vergebenen Bild-ID)
 - csv2joom_catmapping.csv (Zuordnung alter/originaler Kategorie-IDs auf neu vergebene Kategorie-IDs 
 - dieses Zuordnung ist wichtig für den Bild-Import, damit diese den richtigen Kategorien zugeordnet werden können
 - datafileCat.csv (die csv-Datei mit Kategorie-Daten nach Upload) 
@@ -63,7 +66,8 @@ Getestet habe ich mit folgenden Versionen:
 - vor einem Bild-Import muss die Datei csv2joom_catmapping.csv vorhanden sein
 - Bilder ohne ermittelbare Kategorie-ID werden per default der Kategorie mit ID 1 zugeordnet (entspricht der Wurzel-Kategorie der JoomGallery)
 - vor einem komplett neuen Import sollten all diese Dateien aber verschoben/gelöscht/umbenannt werden!
-
+- die Datei csv2joom_already_stored_imgs.txt wird vom Script benutzt, um Bilder mit gleicher ID nicht mehrmals zu importieren
+- will man Bilder aus verschiedenen Quellen - aber mit gleichen IDs - importieren, muss diese Datei geleert/gelöscht/umbenannt werden - sonst werden Bilder mit einer bereits importierten (Original-)ID übersprungen!
 
 
 ## Was ist zu tun:
@@ -81,12 +85,15 @@ ersetzen mit
 - Erstellen eigener csv-Dateien mit den eigenen Kategorien/Bilddaten oder Nutzen der Beispiel-Dateien
 - Formatierung der csv-Dateien siehe Beispiel-Dateien
 - Import der Kategorie-Daten, dazu:
-- Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2joom - Import aus CSV-Dateien in JoomGallery"
-- csv-Datei für Kategorien hochladen mit Button "Schritt 1: CSV-Datei Kategorien" + Klick auf "Checken"-Button
+- Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2Joom :: 1. Schritt :: Kategorien-Import aus CSV-Datei in JoomGallery"
+- csv-Datei für Kategorien hochladen mit Button "CSV-Datei Kategorien" + Klick auf "Checken"-Button
 - wenn alles ok ist, erscheint: "Die Migration kann gestartet werden."; dann auf Button "Starten" klicken
 - Import-Vorgang läuft 
 - Import der Bilder, dazu:
-- Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2joom - Import aus CSV-Dateien in JoomGallery"
-- csv-Datei für Kategorien hochladen mit Button "Schritt 2: CSV-Datei Bilder" + Klick auf "Checken"-Button
+- Migrationsmanager der JoomGallery öffnen und csv2joom-Formular suchen "Csv2Joom :: 2. Schritt :: Bilder-Import aus CSV-Datei in JoomGallery"
+- csv-Datei für Kategorien hochladen mit Button "CSV-Datei Bilder" + Klick auf "Checken"-Button
 - wenn alles ok ist, erscheint: "Die Migration kann gestartet werden."; dann auf Button "Starten" klicken
 - Import-Vorgang läuft
+
+
+
