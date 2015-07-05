@@ -295,10 +295,11 @@ class JoomMigrateCsv2JoomImg extends JoomMigration
   		}
   		
   		//check if category id mapping file exists (category ids changed when they've been stored in db, so we need this mapping to update categoy ids of images)
-  		if (($bImgFileAvailable && $bResultImg)) {
+  		if ($bImgFileAvailable && $bResultImg) {
   			if (!JFile::exists($this->sCatIdMappingFile)) {
-  				$this->writeLogfile('Missing category id mapping file ' . $this->sCatIdMappingFile, true);
+  				$this->writeLogfile('Missing category id mapping file ' . $this->sCatIdMappingFile, false);
   				$bResultImg = false;
+  				echo '<span style="color: red;">Missing category id mapping file ' . $this->sCatIdMappingFile . '. Please import categories first or create file manually.</span>';
   			}
   		}
   		
